@@ -1,0 +1,7 @@
+{
+  "name": "PGY4121-2",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
