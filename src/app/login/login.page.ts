@@ -12,7 +12,17 @@ export class LoginPage {
   username: string = '';
   password: string = '';
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) {
+    this.userService.getIsAuthenticated().then((isAuthenticated) => {
+      if (isAuthenticated) {
+        this.router.navigate(['/home']);
+      }
+    });
+  }
+  
 
   async login() {
     // Comprueba si el usuario y la contraseña coinciden con los datos del servidor.

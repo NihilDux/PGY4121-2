@@ -15,7 +15,9 @@ export class UserService {
     private platform: Platform // Agrega el Platform para verificar la plataforma actual
   ) {
     this.platform.ready().then(() => {
-      this.storage.create(); // Inicializa Ionic Storage
+      this.storage.create().then(() => {
+        // La base de datos se ha creado, ahora puedes acceder a ella
+      });
     });
   }
 
@@ -50,16 +52,20 @@ export class UserService {
   }
 
   async getIsAuthenticated(): Promise<boolean> {
-    // Comprueba si el token JWT existe en el almacenamiento local
     const access_token = await this.storage.get('access_token');
     return access_token !== null;
+  }
+
+  private async loadUserData() {
+    const user = await this.getCurrentUser();
+    // Realiza acciones con los datos del usuario si es necesario
   }
 
   async getCurrentUser(): Promise<any | null> {
     // Decodifica el token JWT para obtener información del usuario
     const access_token = await this.storage.get('access_token');
     if (access_token) {
-      const decodedUser = this.decodeJWT(access_token);
+      const decodedUser = await this.decodeJWT(access_token);
       return decodedUser || null;
     } else {
       return null;
