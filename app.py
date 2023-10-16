@@ -1,41 +1,44 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import jwt
-import datetime
 
 app = Flask(__name__)
 CORS(app)
 
-SECRET_KEY = 'your-secret-key'  # Cambia esto a una clave segura en un entorno de producción
+SECRET_KEY = 'your-secret-key'  # Cambiar esto por una clave segura.
 
 profesores = [
     {
         "id": 1,
-        "nombre": "Juan Pérez",
+        "nombre": "Nicolas Muñoz",
         "cursos": [
             {
                 "id": 1,
-                "nombre": "Matemáticas",
-                "codigo": "PGY0000",
-                "seccion": "013V",
+                "nombre": "Programación de Apps Moviles",
+                "codigo": "PGY4121",
+                "seccion": "009V",
                 "alumnos": [
-                    {"id": 1, "nombre": "Luis"},
-                    {"id": 2, "nombre": "María"}
+                    {"id": 1, "nombre": "Angelo"},
+                    {"id": 2, "nombre": "Samira"}
                 ]
             },
             {
                 "id": 2,
-                "nombre": "Fisica",
-                "codigo": "PGY0000",
-                "seccion": "015V",
-                "alumnos": []
+                "nombre": "Programacion Web",
+                "codigo": "PGY3121",
+                "seccion": "010V",
+                "alumnos": [
+                    {"id": 1, "nombre": "Angelo"},
+                ]
             },
             {
                 "id": 3,
-                "nombre": "Quimica",
-                "codigo": "PGY0000",
-                "seccion": "018V",
-                "alumnos": []
+                "nombre": "Portafolio",
+                "codigo": "PGY4131",
+                "seccion": "012V",
+                "alumnos": [
+                    {"id": 2, "nombre": "Samira"},
+                ]
             }
         ]
     }
@@ -46,17 +49,17 @@ usuarios = [
         "id": 1,
         "user": "docente",
         "password": "0410",
-        "nombre": "Juan Perez",
+        "nombre": "Nicolas Muñoz",
         "perfil":  1,
-        "correo": "docente@gmail.com"
+        "correo": "docente@duocuc.cl"
     },
     {
         "id": 2,
         "user": "alumno",
         "password": "0410",
-        "nombre": "Luis Gonzalez",
+        "nombre": "Angelo Curin",
         "perfil": 2,
-        "correo": "alumno@gmail.com"
+        "correo": "alumno@duocuc.cl"
     }
 ]
 
@@ -99,6 +102,16 @@ def obtener_alumnos_curso(profesor_id, curso_id):
     if not curso:
         return jsonify({"message": "Curso no encontrado"}, 404)
     return jsonify(curso["alumnos"]), 200
+
+@app.route('/buscar_profesor', methods=['POST'])
+def buscar_profesor_por_usuario():
+    data = request.get_json()
+    user = data.get('user')
+    profesor = next((p for p in profesores if p["user"] == user), None)
+    if profesor:
+        return jsonify({'id': profesor['id'], 'user': profesor['user']}), 200
+    return jsonify({"message": "Profesor no encontrado"}, 404)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
