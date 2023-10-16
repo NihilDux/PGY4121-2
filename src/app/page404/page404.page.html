@@ -1,13 +1,18 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>page404</ion-title>
+    <ion-title>Página no encontrada</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">page404</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card>
+    <ion-card-header>
+      <p>Lo siento, la página que buscas no existe.</p>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Por favor, verifica la URL o vuelve a la página de inicio.</p>
+      <br>
+      <ion-button (click)="inicio()">Ir al inicio</ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
