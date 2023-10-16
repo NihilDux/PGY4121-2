@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { UserService } from '../services/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard  {
+export class AuthGuard {
+  constructor(private userService: UserService, private router: Router) {}
 
-  constructor(private router: Router) {}
-
-  canActivate(): boolean {
-    if (//loged in) {
-      return true;
+  async canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Promise<boolean | UrlTree> {
+    const isAuthenticated = await this.userService.getIsAuthenticated();
+    
+    if (isAuthenticated) {
+      return true; // El usuario está autenticado y puede acceder a la ruta
     } else {
-      this.router.navigate(['/login']);
-      return false;
+      // Redirige al usuario a la página de inicio de sesión si no está autenticado
+      return this.router.parseUrl('/login');
     }
   }
-
-  canActivateChild(): boolean {
-    return this.canActivate();
-  }
-  
 }

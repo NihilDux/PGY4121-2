@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from 'src/guard/auth.guard';
 
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -19,6 +21,9 @@ const routes: Routes = [
     path: 'page404',
     loadChildren: () => import('./page404/page404.module').then( m => m.Page404PageModule)
   },
+  { 
+    path: '**', redirectTo: '/page404' 
+  }
 ];
 
 @NgModule({

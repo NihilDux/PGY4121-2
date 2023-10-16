@@ -1,16 +1,6 @@
 {
-"groups": [
-    {
-    "id": 1,
-    "name": "Queen",
-    "fragment": "Queen es una banda británica de rock formada en 1970 en Londres por el cantante Freddie Mercury, el guitarrista Brian May, el baterista Roger Taylor y el bajista John Deacon.",
-    "image": "https://cdn-images-1.medium.com/max/1200/0*sUYztIAGGLmJDtGy.jpg"
-    },
-    {
-    "id": 2,
-    "name": "Oasis",
-    "fragment": "Cool Band",
-    "image": "http://www.gamba.fm/wp/wp-content/uploads/2018/09/Oasis.jpg"
-    }
-    ]
+"users": [
+    { "id": 1, "username": "admin", "password": "0410", "role":"admin" },
+    { "id": 2, "username": "Angelo", "password": "0410", "role":"docente" }
+]
 }
