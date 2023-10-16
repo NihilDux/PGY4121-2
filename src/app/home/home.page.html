@@ -1,20 +1,21 @@
-<ion-header [translucent]="true">
+<!-- productos.component.html -->
+
+<ion-header>
   <ion-toolbar>
     <ion-title>
-      Blank
+      Lista de Productos
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content>
+  <ion-list>
+    <ion-card *ngFor="let g of groups">
+      <ion-card-content>
+        <h2>{{ g.name }}</h2>
+        <p>Descripción: {{ g.fragment }}</p>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-content>
+
