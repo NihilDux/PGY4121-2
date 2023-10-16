@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from "@angular/router";
 import { UserService } from 'src/services/user.service';
 import { LocalApiService } from 'src/services/localapi.service';
 import { Platform } from '@ionic/angular';
@@ -15,8 +15,11 @@ export class HomePage {
   user : any;
   currentUser: any;
   profesores : any;
-  
+  idProfesor : any;
+  userHome: any;
 
+  cursos: any[] = [];
+  
 
   constructor(
     private router: Router,
@@ -24,6 +27,7 @@ export class HomePage {
     private localApiService : LocalApiService,
     private platform : Platform,
     private storage : Storage,
+    private activeroute: ActivatedRoute,
   ) {
     this.platform.ready().then(() => {
       this.storage.create();
@@ -38,13 +42,13 @@ export class HomePage {
     if (!isAuthenticated) {
       // Redirigir al usuario a la página de inicio de sesión si no está autenticado
       this.router.navigate(['/login']);
-      console.log("ERROR NGONINIT HOME")
     }
 
     this.currentUser = await this.userService.getCurrentUser();
+    console.log("CURRENTUSER"+this.currentUser);
 
     this.profesores = await this.localApiService.getProfesores().toPromise();
- 
+    console.log(this.profesores);
     this.user = await this.userService.getCurrentUser();
     console.log(this.user);
 
@@ -55,6 +59,14 @@ export class HomePage {
       console.log('No hay usuario en sesión, redirigiendo...');
       // Redirige o toma la acción apropiada aquí
     }
+
+    this.idProfesor = this.localApiService.getIdProfesor(this.user.user);//REVISAR ACA
+
+    this.localApiService.getCursosPorProfesor(this.idProfesor).subscribe(data => {
+      this.cursos = data;
+      console.log("POR ACA CSM"+this.cursos);
+    });
+    
   }
 
   async initializeStorage() {
@@ -64,6 +76,11 @@ export class HomePage {
   
   async logout(){
     this.userService.logout();
+  }
+
+  async prueba(){
+    this.localApiService.getCursosPorProfesor(this.idProfesor);
+    console.log(this.idProfesor);
   }
 
 }

@@ -8,6 +8,16 @@
 
 <ion-content>
   <ion-list>
+    <ion-item *ngFor="let curso of cursos">
+      <ion-label>
+        <h2>Nombre: {{ curso.nombre }}</h2>
+        <h3>ID: {{ curso.id }}</h3>
+        <h3>Código: {{ curso.codigo }}</h3>
+        <h3>Sección: {{ curso.seccion }}</h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-list>
     <ion-item *ngFor="let profesor of profesores">
       {{ profesor.nombre }}
     </ion-item>
@@ -19,6 +29,7 @@
   </div>
   <br>
   <ion-button expand="full" (click)="logout()">Salir</ion-button>
+  <ion-button expand="full" (click)="prueba()">Prueba</ion-button>
 </ion-content>
 
 
