@@ -21,6 +21,11 @@ export class UserService {
     });
   }
 
+  async initializeStorage() {
+    await this.platform.ready();
+    await this.storage.create();
+  }
+
   async login(username: string, password: string): Promise<boolean> {
     const data = { user: username, password };
 
@@ -52,9 +57,12 @@ export class UserService {
   }
 
   async getIsAuthenticated(): Promise<boolean> {
+    // Comprueba si el token JWT existe en el almacenamiento local
     const access_token = await this.storage.get('access_token');
+    console.log('Token JWT:', access_token);
     return access_token !== null;
   }
+  
 
   private async loadUserData() {
     const user = await this.getCurrentUser();

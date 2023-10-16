@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { UserService } from '../services/user.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard {
   constructor(private userService: UserService, private router: Router) {}
@@ -13,6 +13,8 @@ export class AuthGuard {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<boolean | UrlTree> {
+    await this.userService.initializeStorage(); // Asegúrate de que la base de datos se haya creado
+
     const isAuthenticated = await this.userService.getIsAuthenticated();
     
     if (isAuthenticated) {

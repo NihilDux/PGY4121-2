@@ -32,12 +32,13 @@ export class HomePage {
   }
 
   async ngOnInit() {
+    await this.initializeStorage();
     // Obtener la lista de profesores desde el servicio
-    this.initializeStorage;
     const isAuthenticated = await this.userService.getIsAuthenticated();
     if (!isAuthenticated) {
       // Redirigir al usuario a la página de inicio de sesión si no está autenticado
       this.router.navigate(['/login']);
+      console.log("ERROR NGONINIT HOME")
     }
 
     this.currentUser = await this.userService.getCurrentUser();
@@ -61,4 +62,8 @@ export class HomePage {
     await this.storage.create();
   }
   
+  async logout(){
+    this.userService.logout();
+  }
+
 }
