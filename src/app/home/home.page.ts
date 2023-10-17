@@ -62,7 +62,6 @@ export class HomePage {
   async listarCurso(){
     this.localApiService.getCursosPorProfesor(this.idProfesor).subscribe(data => {
       this.cursos = data;
-
     });
   }
 
