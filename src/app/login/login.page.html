@@ -7,23 +7,25 @@
 <ion-content [fullscreen]="true">
   <div #loginCardWrapper>
     <ion-card #loginCard class="login-card">
-      <ion-card-content>
-        <ion-item>
-          <ion-label position="floating">Nombre de usuario</ion-label>
-          <ion-input [(ngModel)]="logindata.username" name="username" type="text" minlength="3" maxlength="8" required></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label position="floating">Contraseña</ion-label>
-          <ion-input [(ngModel)]="logindata.password" name="password" type="password" minlength="4" maxlength="4"required></ion-input>
-        </ion-item>
-    
-        <ion-button expand="full" (click)="login()">Ingresar</ion-button>
-        <br>
-        <ion-button expand="full" (click)="restore()">Restablecer Contraseña</ion-button>
-
-      </ion-card-content>
-
+      <div class="login-container">
+        <img src="assets/Images/login.png" alt="login" class="imagen-login">
+        <ion-card-content>
+          <ion-item>
+            <ion-label position="floating">Nombre de usuario</ion-label>
+            <ion-input [(ngModel)]="logindata.username" name="username" type="text" minlength="3" maxlength="8" required></ion-input>
+          </ion-item>
+      
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input [(ngModel)]="logindata.password" name="password" type="password" minlength="4" maxlength="4"required></ion-input>
+          </ion-item>
+      
+          <ion-button expand="full" (click)="login()">Ingresar</ion-button>
+          <br>
+          <ion-button expand="full" (click)="restore()">Restablecer Contraseña</ion-button>
+  
+        </ion-card-content>
+      </div>
     </ion-card>
 </div>
 </ion-content>

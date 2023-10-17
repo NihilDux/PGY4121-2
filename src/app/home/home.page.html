@@ -1,8 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title *ngIf="dataUser"> 
-      <h1 #titulo (click)="animatedTitle()">Bienvenido:</h1>
-      <h2>{{ dataUser.nombre }}</h2>
+      <h1 #titulo (click)="animatedTitle()">Bienvenido: {{ dataUser.nombre }}</h1>
     </ion-title>
   </ion-toolbar>
 </ion-header>
