@@ -106,11 +106,21 @@ def obtener_alumnos_curso(profesor_id, curso_id):
 @app.route('/buscar_profesor', methods=['POST'])
 def buscar_profesor_por_usuario():
     data = request.get_json()
-    user = data.get('user')
-    profesor = next((p for p in profesores if p["user"] == user), None)
-    if profesor:
-        return jsonify({'id': profesor['id'], 'user': profesor['user']}), 200
+    username = data.get('username')
+    
+    # Paso 2: Buscar el usuario en la lista de usuarios
+    user_encontrado = next((u for u in usuarios if u["user"] == username), None)
+    
+    if user_encontrado:
+        # Paso 3: Usar el nombre del usuario para buscar el ID del profesor
+        nombre_profesor = user_encontrado['nombre']
+        profesor = next((p for p in profesores if p["nombre"] == nombre_profesor), None)
+        
+        if profesor:
+            return jsonify({'id': profesor['id']}), 200
     return jsonify({"message": "Profesor no encontrado"}, 404)
+
+
 
 
 if __name__ == '__main__':

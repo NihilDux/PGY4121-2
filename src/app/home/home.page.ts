@@ -45,26 +45,27 @@ export class HomePage {
     }
 
     this.currentUser = await this.userService.getCurrentUser();
-    console.log("CURRENTUSER"+this.currentUser);
 
     this.profesores = await this.localApiService.getProfesores().toPromise();
-    console.log(this.profesores);
+
     this.user = await this.userService.getCurrentUser();
-    console.log(this.user);
+
 
     if (this.user) {
-      console.log('Usuario en sesión:', this.user);
+      //console.log('Usuario en sesión:', this.user.username);
     } else {
       // No hay usuario en sesión, puedes redirigirlo a la página de inicio de sesión
       console.log('No hay usuario en sesión, redirigiendo...');
       // Redirige o toma la acción apropiada aquí
     }
-
-    this.idProfesor = this.localApiService.getIdProfesor(this.user.user);//REVISAR ACA
+    
+    this.idProfesor = await this.localApiService.getProfesorIdPorUsuario(this.user.username);
+    console.log("ID del profesorrrr:", this.idProfesor);
+ 
 
     this.localApiService.getCursosPorProfesor(this.idProfesor).subscribe(data => {
       this.cursos = data;
-      console.log("POR ACA CSM"+this.cursos);
+
     });
     
   }
@@ -79,8 +80,7 @@ export class HomePage {
   }
 
   async prueba(){
-    this.localApiService.getCursosPorProfesor(this.idProfesor);
-    console.log(this.idProfesor);
+    this.localApiService.getProfesorIdPorUsuario("docente");
   }
 
 }

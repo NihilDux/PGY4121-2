@@ -18,13 +18,13 @@
     </ion-item>
   </ion-list>
   <ion-list>
-    <ion-item *ngFor="let profesor of profesores">
-      {{ profesor.nombre }}
+    <ion-item *ngIf="user" >
+      <p>Usuario: {{ user.username }}</p>
     </ion-item>
   </ion-list>
-  <div *ngIf="user">
+  <div *ngFor="let profesor of profesores">
     <h2>Detalles del Usuario en Sesión</h2>
-    <p>Nombre: {{ user.username }}</p>
+    <p>Nombre: {{ profesor.nombre }}</p>
     <!-- Agrega más detalles según la estructura de tu objeto de usuario -->
   </div>
   <br>
