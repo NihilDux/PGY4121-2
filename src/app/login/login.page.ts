@@ -38,10 +38,9 @@ async login() {
 
     if (isAuthenticated) {
       // Autenticación exitosa
-      console.log("Funciona")
       this.router.navigate(['/home']);
     } else {
-      // Mostrar mensaje de error si las credenciales son incorrectas.
+      // Mostrar mensaje de error si las credenciales son incorrectas (Por consola).
       console.log('Credenciales incorrectas');
     }
   } catch (error) {

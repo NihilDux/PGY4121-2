@@ -23,6 +23,10 @@ const routes: Routes = [
   },
   { 
     path: '**', redirectTo: '/page404' 
+  },
+  {
+    path: 'restore',
+    loadChildren: () => import('./restore/restore.module').then( m => m.RestorePageModule)
   }
 ];
 

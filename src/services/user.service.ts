@@ -68,7 +68,6 @@ export class UserService {
     const access_token = await this.storage.get('access_token');
     if (access_token) {
       const decodedUser = await this.decodeJWT(access_token);
-      console.log(decodedUser);
       return decodedUser || null;
     } else {
       return null;

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { alumnos } from 'src/models/alumnos';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,14 +22,21 @@ export class LocalApiService {
   getIdProfesor(user: string): Observable<any> {
     const data = { user: user };
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    console.log("REVISAR"+data);
     return this.http.post(`${this.apiUrl}/buscar_profesor`, data, { headers: headers });
   }
 
-  getCursosPorProfesor(profesorId: number):Observable<any> {
-    return this.http.get<any>(this.apiUrl+'/profesores/'+profesorId+'/cursos', this.httpOptions);
+  getCursosPorProfesor(profesorId: number): Observable<any> {
+    return this.http.get<any>(this.apiUrl + '/profesores/' + profesorId + '/cursos', this.httpOptions).pipe(
+      catchError((error) => {
+        console.error('Error al obtener los cursos:', error);
+        if (error.status === 404) {
+          console.log('No tiene cursos');
+          // Puedes realizar otras acciones si lo necesitas
+        }
+        throw error; // Propaga el error nuevamente
+      })
+    );
   }
-
   getAlumnosPorCurso(profesorId: number, cursoId: number){
     return this.http.get<alumnos[]>(this.apiUrl+'/profesores/'+profesorId+'/cursos/'+cursoId+'/alumnos', this.httpOptions);
 
@@ -58,6 +66,19 @@ export class LocalApiService {
       console.error('Error en la solicitud:', error);
     }
   }
+
+  async getDataUser(user: string) {
+    const data = { user };
+    try {
+      return await this.http.post<any>('http://localhost:5000/usuario', data).toPromise();
+      
+    } catch (error) {
+      console.error('Error en la solicitud para obtener el usuario:', error);
+      throw error;
+    } 
+  }
+  
+  
   
   
   

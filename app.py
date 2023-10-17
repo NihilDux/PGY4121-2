@@ -120,6 +120,17 @@ def buscar_profesor_por_usuario():
             return jsonify({'id': profesor['id']}), 200
     return jsonify({"message": "Profesor no encontrado"}, 404)
 
+@app.route('/usuario', methods=['POST'])
+def obtener_usuario_por_username():
+    data = request.get_json()
+    username = data.get('user')
+    usuario = next((u for u in usuarios if u["user"] == username), None)
+    if usuario:
+        return jsonify(usuario), 200
+    return jsonify({"message": "Usuario no encontrado"}, 404)
+
+
+
 
 
 

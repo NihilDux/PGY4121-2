@@ -1,35 +1,43 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Lista de Productos
+    <ion-title *ngIf="dataUser"> 
+      <h1>Bienvenido:</h1>
+      <h2>{{ dataUser.nombre }}</h2>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let curso of cursos">
-      <ion-label>
-        <h2>Nombre: {{ curso.nombre }}</h2>
-        <h3>ID: {{ curso.id }}</h3>
-        <h3>Código: {{ curso.codigo }}</h3>
-        <h3>Sección: {{ curso.seccion }}</h3>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-item *ngIf="user" >
-      <p>Usuario: {{ user.username }}</p>
-    </ion-item>
-  </ion-list>
-  <div *ngFor="let profesor of profesores">
-    <h2>Detalles del Usuario en Sesión</h2>
-    <p>Nombre: {{ profesor.nombre }}</p>
-    <!-- Agrega más detalles según la estructura de tu objeto de usuario -->
-  </div>
-  <br>
-  <ion-button expand="full" (click)="logout()">Salir</ion-button>
-  <ion-button expand="full" (click)="prueba()">Prueba</ion-button>
+    <ion-card>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngIf="user" >
+            <p>Usuario: {{ user.username }}</p>
+          </ion-item>
+        </ion-list>
+        <div *ngIf="dataUser">
+          <h2>Detalles del Usuario en Sesión</h2>
+          <p>Nombre: {{ dataUser.nombre }}</p>
+          <!-- Agrega más detalles según la estructura de tu objeto de usuario -->
+        </div>
+      </ion-card-content>
+    <br>
+    <ion-button expand="full" (click)="logout()">Salir</ion-button>
+    
+    <ion-card-content>
+      <ion-list>
+        <ion-button expand="full" (click)="listarCurso()">Prueba</ion-button>
+        <ion-item *ngFor="let curso of cursos">
+          <ion-label>
+            <h2>Nombre: {{ curso.nombre }}</h2>
+            <h3>ID: {{ curso.id }}</h3>
+            <h3>Código: {{ curso.codigo }}</h3>
+            <h3>Sección: {{ curso.seccion }}</h3>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+   </ion-card-content>
+  </ion-card>
 </ion-content>
 
 

@@ -1,0 +1,15 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Restablecer</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-item>
+      <ion-label position="floating">Nombre de usuario:</ion-label>
+      <ion-input [(ngModel)]="user" name="user" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-button expand="full" (click)="restoreUser()">Iniciar sesión</ion-button>
+    </ion-item>
+</ion-content>
