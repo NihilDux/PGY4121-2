@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AlertController, ToastController, AnimationController } from '@ionic/angular';
 import { Router, ActivatedRoute, NavigationExtras } from "@angular/router";
 import { UserService } from 'src/services/user.service';
 import { LocalApiService } from 'src/services/localapi.service';
@@ -12,6 +13,7 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  @ViewChild('titulo', { read: ElementRef }) titulo: ElementRef;
   user : any;
   dataUser: any;
   profesores : any;
@@ -26,8 +28,11 @@ export class HomePage {
     private localApiService : LocalApiService,
     private platform : Platform,
     private storage : Storage,
-    private activeroute: ActivatedRoute,
+    private alertController: AlertController,
+    private toastController: ToastController,
+    private animationCtrl: AnimationController,
   ) {
+    this.titulo = ElementRef.prototype as any;
     this.platform.ready().then(() => {
       this.storage.create();
     });
@@ -63,6 +68,42 @@ export class HomePage {
     this.localApiService.getCursosPorProfesor(this.idProfesor).subscribe(data => {
       this.cursos = data;
     });
+  }
+
+  //Animaciones y esas cosas (Pero aun no funciona je)
+  async ngAfterViewInit() {
+    const titleElement = this.titulo.nativeElement;
+
+    const translateAnimation = this.animationCtrl
+      .create()
+      .addElement(titleElement)
+      .keyframes([
+        { offset: 0, transform: 'translateX(0)' },
+        { offset: 0.5, transform: 'translateX(50%)' },
+        { offset: 1, transform: 'translateX(0)' },
+      ])
+      .duration(1500);
+
+    const opacityAnimation = this.animationCtrl
+      .create()
+      .addElement(titleElement)
+      .keyframes([
+        { offset: 0, opacity: '1' },
+        { offset: 0.5, opacity: '0.2' },
+        { offset: 1, opacity: '1' },
+      ])
+      .duration(1000);
+
+    const combinedAnimation = this.animationCtrl
+      .create()
+      .addAnimation([translateAnimation, opacityAnimation]);
+
+    const repeatAnimation = async () => {
+      await combinedAnimation.play();
+      setTimeout(repeatAnimation, 2500);
+    };
+
+    repeatAnimation();
   }
 
 }

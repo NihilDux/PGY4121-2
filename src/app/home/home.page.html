@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title *ngIf="dataUser"> 
-      <h1>Bienvenido:</h1>
+      <h1 #titulo>Bienvenido:</h1>
       <h2>{{ dataUser.nombre }}</h2>
     </ion-title>
   </ion-toolbar>
@@ -39,6 +39,8 @@
    </ion-card-content>
   </ion-card>
 </ion-content>
-
-
-
+<ion-footer>
+<ion-toolbar>
+  <ion-title class="ion-text-center">Developer: Gundyr</ion-title>
+</ion-toolbar>
+</ion-footer>
