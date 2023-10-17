@@ -64,14 +64,28 @@ export class HomePage {
     this.userService.logout();
   }
 
-  async listarCurso(){
-    this.localApiService.getCursosPorProfesor(this.idProfesor).subscribe(data => {
-      this.cursos = data;
-    });
+  async listarCurso(){ //No funciona el catch, seguramente no da error pero 
+    try{               //no me trae los datos ya que el error está dentro del Flask
+      this.localApiService.getCursosPorProfesor(this.idProfesor).subscribe(data => {
+        this.cursos = data;
+      });
+
+    } catch(error){
+      this.presentToast('No hay cursos para listar');
+    }
+
   }
 
-  //Animaciones y esas cosas (Pero aun no funciona je)
-  async ngAfterViewInit() {
+  //Animaciones y esas cosas (Pero aun no funciona bien, sólo al click)
+  async presentToast(message: string, duration?: number) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration ? duration : 2000,
+    });
+    toast.present();
+  }
+  
+  async animatedTitle() {
     const titleElement = this.titulo.nativeElement;
 
     const translateAnimation = this.animationCtrl
