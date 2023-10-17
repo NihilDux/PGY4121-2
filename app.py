@@ -129,8 +129,72 @@ def obtener_usuario_por_username():
         return jsonify(usuario), 200
     return jsonify({"message": "Usuario no encontrado"}, 404)
 
+@app.route('/crear_profesor', methods=['POST'])
+def crear_profesor():
+    data = request.get_json()
+    nuevo_profesor = {
+        "id": len(profesores) + 1,
+        "nombre": data.get('nombre'),
+        "cursos": []
+    }
+    profesores.append(nuevo_profesor)
+    return jsonify({"message": "Profesor creado exitosamente", "profesor": nuevo_profesor}), 201
 
+@app.route('/profesores/update/<int:profesor_id>', methods=['PUT'])
+def actualizar_profesor(profesor_id):
+    data = request.get_json()
+    profesor = next((p for p in profesores if p["id"] == profesor_id), None)
+    if not profesor:
+        return jsonify({"message": "Profesor no encontrado"}, 404)
+    
+    profesor["nombre"] = data.get('nombre')
+    return jsonify({"message": "Profesor actualizado exitosamente", "profesor": profesor}), 200
 
+@app.route('/profesores/delete/<int:profesor_id>', methods=['DELETE'])
+def eliminar_profesor(profesor_id):
+    profesor = next((p for p in profesores if p["id"] == profesor_id), None)
+    if not profesor:
+        return jsonify({"message": "Profesor no encontrado"}, 404)
+    
+    profesores.remove(profesor)
+    return jsonify({"message": "Profesor eliminado exitosamente"}), 200
+
+@app.route('/usuarios/create', methods=['POST'])
+def crear_usuario():
+    data = request.get_json()
+    nuevo_usuario = {
+        "id": len(usuarios) + 1,
+        "user": data.get('user'),
+        "password": data.get('password'),
+        "nombre": data.get('nombre'),
+        "perfil": data.get('perfil'),
+        "correo": data.get('correo')
+    }
+    usuarios.append(nuevo_usuario)
+    return jsonify({"message": "Usuario creado exitosamente", "usuario": nuevo_usuario}), 201
+
+@app.route('/usuarios/update/<int:usuario_id>', methods=['PUT'])
+def actualizar_usuario(usuario_id):
+    data = request.get_json()
+    usuario = next((u for u in usuarios if u["id"] == usuario_id), None)
+    if not usuario:
+        return jsonify({"message": "Usuario no encontrado"}, 404)
+    
+    usuario["user"] = data.get('user')
+    usuario["password"] = data.get('password')
+    usuario["nombre"] = data.get('nombre')
+    usuario["perfil"] = data.get('perfil')
+    usuario["correo"] = data.get('correo')
+    return jsonify({"message": "Usuario actualizado exitosamente", "usuario": usuario}), 200
+
+@app.route('/usuarios/delete/<int:usuario_id>', methods=['DELETE'])
+def eliminar_usuario(usuario_id):
+    usuario = next((u for u in usuarios if u["id"] == usuario_id), None)
+    if not usuario:
+        return jsonify({"message": "Usuario no encontrado"}, 404)
+    
+    usuarios.remove(usuario)
+    return jsonify({"message": "Usuario eliminado exitosamente"}), 200
 
 
 
