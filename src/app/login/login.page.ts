@@ -26,7 +26,7 @@ export class LoginPage {
     private animationCtrl: AnimationController,
   ) {
     this.platform.ready().then(() => {
-      this.userService.initializeStorage(); // Asegúrate de que la base de datos se haya creado
+      this.userService.initializeStorage();
     });
 
     this.userService.getIsAuthenticated().then((isAuthenticated) => {
@@ -50,7 +50,7 @@ async login() {
       this.router.navigate(['/home']);
     }
     } else {
-      // Mostrar mensaje de error si las credenciales son incorrectas (Por consola).
+      // Mostrar mensaje de error si las credenciales son incorrectas.
       this.presentToast('Credenciales incorrectas');
     }
   } catch (error) {

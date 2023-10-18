@@ -64,8 +64,8 @@ export class HomePage {
     this.userService.logout();
   }
 
-  async listarCurso(){ //No funciona el catch, seguramente no da error (Por consola) pero 
-    try{               //no me trae los datos ya que el error está dentro del Flask
+  async listarCurso(){ 
+    try{               
       if (this.idProfesor > 0 ) {
         this.localApiService.getCursosPorProfesor(this.idProfesor).subscribe(data => {
           this.cursos = data;
