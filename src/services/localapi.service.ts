@@ -31,9 +31,8 @@ export class LocalApiService {
         console.error('Error al obtener los cursos:', error);
         if (error.status === 404) {
           console.log('No tiene cursos');
-          // Puedes realizar otras acciones si lo necesitas
         }
-        throw error; // Propaga el error nuevamente
+        throw error;
       })
     );
   }
@@ -69,7 +68,7 @@ export class LocalApiService {
 
   async getDataUser(user: string) {
     const data = { user };
-    try {
+    try {      
       return await this.http.post<any>('http://localhost:5000/usuario', data).toPromise();
       
     } catch (error) {
