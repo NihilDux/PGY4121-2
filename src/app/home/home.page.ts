@@ -64,11 +64,16 @@ export class HomePage {
     this.userService.logout();
   }
 
-  async listarCurso(){ //No funciona el catch, seguramente no da error pero 
+  async listarCurso(){ //No funciona el catch, seguramente no da error (Por consola) pero 
     try{               //no me trae los datos ya que el error está dentro del Flask
-      this.localApiService.getCursosPorProfesor(this.idProfesor).subscribe(data => {
-        this.cursos = data;
-      });
+      if (this.idProfesor > 0 ) {
+        this.localApiService.getCursosPorProfesor(this.idProfesor).subscribe(data => {
+          this.cursos = data;
+        });
+      }
+      else{
+        console.log("No hay cursos para listar")//Cambiar a feedback visual en el page
+      }
 
     } catch(error){
       this.presentToast('No hay cursos para listar');
