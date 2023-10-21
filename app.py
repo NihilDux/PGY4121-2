@@ -1,3 +1,6 @@
+#Para iniciar la app hay que correr una terminal desde la raiz del proyecto con el siguiente comando "py app.py"
+
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import jwt
